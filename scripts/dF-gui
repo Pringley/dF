@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import Tkinter as tk
+import ttk
+from random import choice
+
+root = tk.Tk()
+root.title("dF Dice Roller")
+
+mainframe = tk.Frame(root)
+mainframe.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
+mainframe.columnconfigure(0, weight=1)
+mainframe.rowconfigure(0, weight=1)
+
+rolls = tk.StringVar()
+total = tk.StringVar()
+
+values = (1, 0, -1)
+faces = {1: '+', 0: ' ', -1: '-'}
+def roll(*args):
+    dice = [choice(values) for i in range(4)]
+    rolls.set(' '.join('[{}]'.format(faces[d]) for d in dice))
+    total.set(sum(dice))
+
+ttk.Label(mainframe, text="Result:").grid(column=1, row=1, sticky=tk.N)
+ttk.Label(mainframe, textvariable=rolls).grid(column=1, row=2, sticky=tk.W)
+ttk.Label(mainframe, text=" => ").grid(column=2, row=2, sticky=tk.W)
+ttk.Label(mainframe, textvariable=total).grid(column=3, row=2, sticky=tk.E)
+
+ttk.Button(mainframe, text="Roll", command=roll).grid(column=3, row=3,
+    sticky=tk.E)
+
+for child in mainframe.winfo_children():
+    child.grid_configure(padx=5, pady=5)
+
+root.bind('<Return>', roll)
+
+root.mainloop()

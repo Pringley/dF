@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+from random import choice
+values = (1, 0, -1)
+faces = {1: '+', 0: ' ', -1: '-'}
+dice = [choice(values) for i in range(4)]
+print '{} => {}'.format(
+    (' '.join('[{}]'.format(faces[d]) for d in dice)),
+    sum(dice))
